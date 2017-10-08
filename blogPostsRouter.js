@@ -46,18 +46,20 @@ BlogPosts.create(
 
   router.put('/:id', jsonParser, (req, res) => {
     const requiredFields = ['title', 'content', 'author', 'publishDate'];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`;
-        console.error(message);
-        return res.status(400).send(message);
-    }
+    requiredFields.forEach(field => {
+      if (!(field in req.body)) {
+        const message = `Missing \`${field}\` in request body`;
+          console.error(message);
+          return res.status(400).send(message);
+        }
+    });
     console.log(`Updating blog post item \`${req.params.id}\``);
     const updatedItem = BlogPosts.update({
       id: req.params.id,
       title: req.body.title,
       content: req.body.content,
       author: req.body.author,
-      publishDate: request.body.publishDate
+      publishDate: req.body.publishDate
     });
     res.status(204).end();
   });

@@ -7,7 +7,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('BlogPosts', function() {
+describe('blog posts', function() {
   before(function() {
     return runServer();
   });
@@ -34,7 +34,7 @@ describe('BlogPosts', function() {
 
   it('should add an item on POST', function() {
     const newItem = {'title': 'Test One', 'content': 'Content here', 'author': 'Kelsey', 'publishDate': '10/20/1992'};
-    return chai.request(app);
+    return chai.request(app)
       .post('/blog-posts')
       .send(newItem)
       .then(function(res) {
