@@ -46,4 +46,24 @@ describe('BlogPosts', function() {
         res.body.should.deep.equal(Object.assign(newItem, {id: res.body.id}));
       });
   });
+
+  it('should update items on PUT', function() {
+    const updateData = {
+      title: 'foo',
+      content: 'bar',
+      author: 'me',
+      publishDate: '10/20/1992'
+    };
+    return chai.request(app)
+      .get('/blog-posts')
+      .then(function(res) {
+        updateData.id = res.body[0].id;
+        return chai.request(app)
+          .put(`/blog-posts/${updateData.id}`)
+          .send(updateData);
+      })
+      .then(function(res) {
+        res.should.have.status(204);
+      });
+  });
 });
